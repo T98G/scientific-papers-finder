@@ -68,7 +68,6 @@ class Paper:
     def filter_domains(self, domains):
         """Filter Paper by domain"""
         for domain in domains.split():
-            print(re.findall(domain.lower(), self.url))
             if re.findall(domain.lower(), self.url):
                 self.domain = re.findall(domain.lower(), self.url)[0]
 
@@ -136,7 +135,7 @@ def main():
     n = int(args.number) #maximum number of publications to search
     filename = args.output #output file name
 
-    if args.period: ##Check if the -p flag was use
+    if args.period: ##Check if the -p flag was used
         period = args.period 
     if args.domains: ##Check if the -d flag was used 
         domains = args.domains
