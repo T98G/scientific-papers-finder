@@ -166,7 +166,7 @@ def main():
             paper.read() ## Read the webpage content
             paper.get_keywords() ## Get the key words from the web page content
             paper.keywords_filter(keywords) ##Assign a score to the publication 
-
+            paper.norm_priority()
         except Exception as e:
             raise e
         finally:
