@@ -78,7 +78,8 @@ class Paper:
 
     def filter_citations(self, citations):
         """Return if the number of the citations is igual or grater than the minimum"""
-        self.minim_citations = (self.citations >= int(citations))
+        if self.citations:
+            self.minim_citations = (self.citations >= int(citations))
 
     def norm_priority(self):
         """Makes sure publication score is within 0 to 10 range"""
@@ -135,6 +136,10 @@ def main():
     n = int(args.number) #maximum number of publications to search
     filename = args.output #output file name
 
+    period = None ## Init variables as none so they can be used in if statement in
+    domains = None ## case the corresponding flags are not used
+    citations = None
+    
     if args.period: ##Check if the -p flag was used
         period = args.period 
     if args.domains: ##Check if the -d flag was used 
@@ -159,7 +164,9 @@ def main():
         finally:
             pass
     
-    for paper in papers:
+    print(f"\nCrawling ... \n")
+
+    for paper in tqdm(papers):
         
         try:
             paper.get_url() ## Get the publication url for a Paper object
@@ -192,7 +199,9 @@ def main():
 
     if domains: ## If Domains is not None filter publications by domains
         
-        for paper in papers:
+        print(f"\nFiltering by Domain ... \n")
+
+        for paper in tqdm(papers):
             try:
                 paper.filter_domains(domains) ##Checks if the publication url is a domain specified by the user
             except Exception as e:
@@ -204,7 +213,9 @@ def main():
 
     if citations: ## if -c flag was used
 
-        for paper in papers:
+        print(f"\nFiltering by Citations ... \n")
+
+        for paper in tqdm(papers):
             try:
                 paper.get_citations() #Get citations from publication data
                 paper.filter_citations(citations) ## Checks if publication has minimum number of citations
@@ -216,7 +227,7 @@ def main():
         papers = list(filter(lambda x: True if x.minim_citations else False, papers))
 
     #Sort the papers by their score
-    papers.sort(key=lambda x: x.priority)
+    papers.sort(key=lambda x: x.priority).reverse()
 
     #Make data into a string that can be written to the output file
     string = make_url_score_output(papers)
