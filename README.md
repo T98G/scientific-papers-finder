@@ -1,6 +1,5 @@
 # scholar-crawler
 *** This Script performes a refined search on google scholar for a query provided by the user
-*** Than filters the results getting to just a few  
 
 This script depends on the following packages :
 
@@ -11,8 +10,7 @@ This script depends on the following packages :
 *requests
 *bs4
 *argparse
-
-it also depends on Google Chrome web browser
+*it also depends on Google Chrome web browser
 
 This script takes the following command line arguments:
 
@@ -27,7 +25,7 @@ This script can be run by the following command as an example
 
 python3 crawler.py -q "query" -kw "keywords" -n 1 -p "2010-2022" -c 2  -d "acs nature science direct rcs mdpi" -o test.csv
 
-# Please not:
+# Please note:
 
 ** Google restricts the number of requests from automatized scripts to 50000 per day, which is not much
 ** So the user might want the limit the number of maximum publications to search for /
