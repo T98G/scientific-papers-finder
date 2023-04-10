@@ -1,5 +1,6 @@
 # scholar-crawler
-*** This Script performes a refined search on google scholar for a query provided by the user
+
+This Script performes a refined search on google scholar for a query provided by the user
 
 This script depends on the following packages :
 
