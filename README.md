@@ -29,8 +29,8 @@ python3 crawler.py -q "query" -kw "keywords" -n 1 -p "2010-2022" -c 2  -d "acs n
 # Please note:
 
 ** Google restricts the number of requests from automatized scripts to 50000 per day, which is not much
-** So the user might want the limit the number of maximum publications to search for /
-** as 1 publication correspond to multiple requests
+so the user might want the limit the number of maximum publications to search for / 
+as 1 publication correspond to multiple requests
 
 # Do NOT close the Chrome windows opened by the script while it's running or it will crash
 
