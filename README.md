@@ -22,7 +22,7 @@ This script takes the following command line arguments:
 * -d "the website domains to take results from" (optional) #but really useful
 * -o "the output file name to store the url for the filtered urls"
 
-Th1is script can be run by the following command as an example
+This script can be run by the following command as an example
 
 python3 crawler.py -q "query" -kw "keywords" -n 1 -p "2010-2022" -c 2  -d "acs nature science direct rcs mdpi" -o test.csv
 
