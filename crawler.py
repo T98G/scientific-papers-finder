@@ -19,7 +19,6 @@ class Paper:
         self.url = None
         self.priority = 0
         self.text = None
-        self.keywords = None
         self.year = None
         self.domain = None
         self.period = None
@@ -51,18 +50,12 @@ class Paper:
 
         if self.year:
             self.period = ((self.year > int(period[0])) and (self.year < int(period[1])))
-        
-    def get_keywords(self):
-        """Get keywords from the publication text"""
-        for line in self.text.split("\n"):
-            if "keywords" in line.lower(): ##Find line with "Keywords in it" yes super junkie
-                self.keywords = line
     
     def keywords_filter(self, filter_words):
         """Assign a score to publication based on the presence of keywords"""
-        if self.keywords:
+        if self.text:
             for word in filter_words:
-                if re.findall(word.lower(), self.keywords):
+                if re.findall(word.lower(), self.text):
                     self.priority = int(self.priority) + 1
     
     def filter_domains(self, domains):
@@ -173,7 +166,6 @@ def main():
             paper.read() ## Read the webpage content
 
             if paper.text:
-                paper.get_keywords() ## Get the key words from the web page content
                 paper.keywords_filter(keywords) ##Assign a score to the publication 
                 paper.norm_priority()
             else:
