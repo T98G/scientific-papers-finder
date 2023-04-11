@@ -135,26 +135,21 @@ def main():
     keywords = args.keywords # keywords to refine the search
     n = int(args.number) #maximum number of publications to search
     filename = args.output #output file name
+    period = args.period #time period to filter
+    domains = args.domains #domain names to filter
+    citations = args.citations #Minimum nuymber of citations
 
-    period = None ## Init variables as none so they can be used in if statement in
-    domains = None ## case the corresponding flags are not used
-    citations = None
-    
-    if args.period: ##Check if the -p flag was used
-        period = args.period 
-    if args.domains: ##Check if the -d flag was used 
-        domains = args.domains
-    if args.citations: ##Check if the -c flag was used
-        citations = args.citations
 
     ## Init a query object from scholarly
     search = scholarly.search_pubs(query) 
     
     ## Iterates getting the first n publications data
+
+    print("\nSearching Google scholar ... \n")
+
     pubs = get_first_n_pubs(search, n)
 
     papers = [] ## Publications which were treated will be from now on regarded as papers
-
 
     for pub in tqdm(pubs):
         try:
@@ -163,8 +158,8 @@ def main():
             raise e 
         finally:
             pass
-    
-    print(f"\nCrawling ... \n")
+
+    print("\nCrawling .... \n")
 
     for paper in tqdm(papers):
         
@@ -234,6 +229,8 @@ def main():
 
     #writes data to an output file
     write_output(string, filename)
+
+    print("\nDone!")
 
 if __name__ == '__main__':
     main()
