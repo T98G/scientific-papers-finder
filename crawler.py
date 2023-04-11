@@ -222,7 +222,12 @@ def main():
         papers = list(filter(lambda x: True if x.minim_citations else False, papers))
 
     #Sort the papers by their score
-    papers.sort(key=lambda x: x.priority).reverse()
+    if papers:
+        papers.sort(key=lambda x: x.priority).reverse()
+    else:
+        print("\nAn error occured!! List of papers has no item!\n")
+        return 1
+
 
     #Make data into a string that can be written to the output file
     string = make_url_score_output(papers)
@@ -231,6 +236,8 @@ def main():
     write_output(string, filename)
 
     print("\nDone!")
+
+    return 0
 
 if __name__ == '__main__':
     main()
