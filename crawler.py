@@ -83,7 +83,10 @@ class Paper:
 
     def norm_priority(self):
         """Makes sure publication score is within 0 to 10 range"""
-        self.priority = int(self.priority) % 10
+        if self.priority is not None:
+            self.priority = int(self.priority) % 10
+        else:
+            self.priority = 0
 
 
 def get_first_n_pubs(query, n):
@@ -161,25 +164,30 @@ def main():
 
     print("\nCrawling .... \n")
 
-    for paper in tqdm(papers):
-        
+    ##Load Paper data into list of Paper objects
+    ##Read the page text
+
+    for paper in tqdm(papers):    
         try:
             paper.get_url() ## Get the publication url for a Paper object
             paper.read() ## Read the webpage content
-            paper.get_keywords() ## Get the key words from the web page content
-            paper.keywords_filter(keywords) ##Assign a score to the publication 
-            paper.norm_priority()
+
+            if paper.text:
+                paper.get_keywords() ## Get the key words from the web page content
+                paper.keywords_filter(keywords) ##Assign a score to the publication 
+                paper.norm_priority()
+            else:
+                papers.remove(paper)
         except Exception as e:
             raise e
         finally:
             pass
 
-    ##Filters the publications making sure there is a text conten
-    papers = list(filter(lambda x: True if x.text else False, papers))
-    ##Filters the publications making sure they have the correct keywords
-    papers = list(filter(lambda x: True if x.keywords else False, papers))
 
-    if period:    ## If flag -p was used
+    if period: ## If flag -p was used
+
+        print("\nFiltering by period ... \n")
+
         for paper in papers:
             try:
                 paper.get_year() #get publication year
@@ -190,7 +198,7 @@ def main():
                 pass
 
         #Filter the publications that are in the time interval set by the user 
-        papers = list(filter(lambda x: True if x.period else False, papers))
+        papers = list(filter(lambda x: x.period, papers))
 
     if domains: ## If Domains is not None filter publications by domains
         
@@ -204,7 +212,7 @@ def main():
             finally:
                 pass
         ## Filters the Papers based by if their url domain is in the user suplied input
-        papers = list(filter(lambda x: True if x.domain else False, papers))
+        papers = list(filter(lambda x: x.domain, papers))
 
     if citations: ## if -c flag was used
 
@@ -219,15 +227,10 @@ def main():
             finally:
                 pass
         ## Filters the publications by if they have the minimum number of citations
-        papers = list(filter(lambda x: True if x.minim_citations else False, papers))
+        papers = list(filter(lambda x: x.minim_citations , papers))
 
     #Sort the papers by their score
-    if papers:
-        papers.sort(key=lambda x: x.priority).reverse()
-    else:
-        print("\nAn error occured!! List of papers has no item!\n")
-        return 1
-
+    papers.sort(key=lambda x: x.priority, reverse=True)
 
     #Make data into a string that can be written to the output file
     string = make_url_score_output(papers)
@@ -236,8 +239,6 @@ def main():
     write_output(string, filename)
 
     print("\nDone!")
-
-    return 0
 
 if __name__ == '__main__':
     main()
