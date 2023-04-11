@@ -20,6 +20,7 @@ This script takes the following command line arguments:
 * -n "The maximum number of publications in the google scholar results to search through"
 * -p "the time in years to refine the search, it must be written as year-year delimited by quote marks" (optional)
 * -d "the website domains to take results from" (optional) #but really useful
+* -c "The minimum number of citations" (optional)
 * -o "the output file name to store the url for the filtered urls"
 
 This script can be run by the following command as an example
