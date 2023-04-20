@@ -8,6 +8,7 @@ from scholarly import scholarly
 import re
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
 from tqdm import tqdm   
 
 ## Going to use object orientation to keep publications data organized
@@ -27,7 +28,15 @@ class Paper:
 
     def read(self):
         """Read contents of a web page and closes the browser"""
-        wd = webdriver.Chrome()
+
+        #Open chrome silently in the background
+
+        chrome_options = Options()
+        chrome_options.add_argument("--headless")
+
+        #Read webpage data
+
+        wd = webdriver.Chrome(options=chrome_options)
         wd.get(self.url)
         text = BeautifulSoup(wd.page_source,"lxml").get_text()
         wd.close()
