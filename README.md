@@ -4,14 +4,14 @@ This Script performes a refined search on google scholar for a query provided by
 
 This script depends on the following packages :
 
-*selenium
-*scholarly
-*tqdm
-*re
-*requests
-*bs4
-*argparse
-*it also depends on Google Chrome web browser
+* selenium
+* scholarly
+* tqdm
+* re
+* requests
+* bs4
+* argparse
+* it also depends on Google Chrome web browser
 
 This script takes the following command line arguments:
 
