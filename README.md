@@ -33,8 +33,5 @@ python3 crawler.py -q "query" -kw "keywords" -n 1 -p "2010-2022" -c 2  -d "acs n
 so the user might want the limit the number of maximum publications to search for, 
 as each publication corresponds to multiple requests
 
-# Do NOT close the Chrome windows opened by the script while it's running or it will crash
-
-
 ## Have Fun !
 
